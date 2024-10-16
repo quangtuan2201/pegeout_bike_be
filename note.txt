@@ -1,0 +1,1 @@
+ "dev": "concurrently \"tsc --watch\" \"nodemon --watch src --exec babel-node src/server.ts\""

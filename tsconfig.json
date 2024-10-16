@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES6", // Phiên bản ECMAScript mục tiêu
+    "module": "commonjs", // Node.js sử dụng module CommonJS
+    "outDir": "./dist", // Thư mục đầu ra cho các file đã biên dịch
+    "rootDir": "./src", // Thư mục chứa các file nguồn
+    "strict": true, // Bật các tùy chọn kiểm tra chặt chẽ
+    "esModuleInterop": true, // Cho phép nhập mặc định từ các module CommonJS
+    "skipLibCheck": true // Bỏ qua việc kiểm tra type của các file khai báo
+  },
+  "include": ["src/**/*"], // Bao gồm tất cả các file TypeScript trong thư mục src
+  "exclude": ["node_modules"] // Loại trừ node_modules khỏi quá trình biên dịch
+}
