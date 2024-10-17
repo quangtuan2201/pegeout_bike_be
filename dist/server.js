@@ -3,13 +3,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const route_1 = __importDefault(require("./routes/route"));
+// import initWebRoutes from "./routes/routes";
+const initWebRoutes_1 = __importDefault(require("./routes/initWebRoutes"));
 const express_1 = __importDefault(require("express"));
 require("dotenv").config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 2201;
 app.use(express_1.default.json());
-(0, route_1.default)(app);
+app.use(express_1.default.urlencoded({ extended: true })); // Để xử lý dữ liệu URL-encoded
+(0, initWebRoutes_1.default)(app);
 app.listen(port, () => {
     console.log(`_____Server is running on http://localhost:${port}_____`);
 });

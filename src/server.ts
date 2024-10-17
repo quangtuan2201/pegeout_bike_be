@@ -1,10 +1,12 @@
-import initWebRoutes from "./routes/route";
+// import initWebRoutes from "./routes/routes";
+import initWebRoutes from "./routes/initWebRoutes";
 import express from "express";
 require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 2201;
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Để xử lý dữ liệu URL-encoded
 
 initWebRoutes(app);
 
