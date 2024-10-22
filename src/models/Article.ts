@@ -4,8 +4,6 @@ interface IArticle extends Document {
   content: string; // Nội dung bài viết
   author: mongoose.Types.ObjectId; // ID của tác giả (tham chiếu đến User)
   tags: string[]; // Mảng các thẻ liên quan
-  createdAt: Date; // Ngày tạo
-  updatedAt: Date; // Ngày cập nhật
   status: boolean; // Trạng thái bài viết (xuất bản hay không)
   favorites: mongoose.Types.ObjectId[]; // Mảng chứa ID của người dùng yêu thích bài viết
   images: string[]; // Mảng chứa URL hình ảnh liên quan

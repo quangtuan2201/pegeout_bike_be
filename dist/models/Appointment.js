@@ -25,26 +25,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 // Tạo schema cho Product
-const UserSchema = new mongoose_1.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    fullName: { type: String, required: true },
-    gender: {
+const AppointmentSchema = new mongoose_1.Schema({
+    userId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "User", required: true },
+    bicycleId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "AllCode",
+        ref: "Bicycle",
         required: true,
     },
-    avatar: { type: String },
-    email: { type: String },
-    phone: { type: String, required: true },
-    role: {
+    appointmentDate: { type: Date, required: true }, // DateTime
+    status: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "AllCode",
-        required: true,
+        require: true,
     },
-    favorites: [{ type: mongoose_1.default.Schema.Types.ObjectId, ref: "Bicycle" }],
-}, { timestamps: true } //Thêm timestamps để tự động tạo createAt và updateAt
-);
-// Export model Product với interface IProduct
-const User = mongoose_1.default.model("User", UserSchema);
-exports.default = User;
+});
+// Export model Product với interface IAppointment
+const Appointment = mongoose_1.default.model("Appointment", AppointmentSchema);
+exports.default = Appointment;

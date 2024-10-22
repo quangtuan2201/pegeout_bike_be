@@ -24,27 +24,28 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-// Tạo schema cho Product
-const UserSchema = new mongoose_1.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    fullName: { type: String, required: true },
-    gender: {
+// Tạo schema cho Bicycle
+const BicycleSchema = new mongoose_1.Schema({
+    name: { type: String, require: true },
+    productionYear: { type: Number, require: true },
+    color: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "AllCode",
         required: true,
     },
-    avatar: { type: String },
-    email: { type: String },
-    phone: { type: String, required: true },
-    role: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "AllCode",
-        required: true,
+    frameType: { type: String, require: true },
+    accessories: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "Accessories" },
+    quantity: { type: Number, require: true },
+    status: { type: Boolean, default: true },
+    thumbnail: { type: String },
+    listImage: [{ type: String }],
+    urlVideo: [{ type: String }],
+    price: {
+        pre: { type: Number, require: true },
+        new: { type: Number },
     },
-    favorites: [{ type: mongoose_1.default.Schema.Types.ObjectId, ref: "Bicycle" }],
-}, { timestamps: true } //Thêm timestamps để tự động tạo createAt và updateAt
-);
+    description: { type: String, require: true },
+}, { timestamps: true });
 // Export model Product với interface IProduct
-const User = mongoose_1.default.model("User", UserSchema);
-exports.default = User;
+const Bicycle = mongoose_1.default.model("Bicycle", BicycleSchema);
+exports.default = Bicycle;

@@ -24,27 +24,23 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-// Tạo schema cho Product
-const UserSchema = new mongoose_1.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    fullName: { type: String, required: true },
-    gender: {
+// Tạo schema cho Bicycle
+const ArticleSchema = new mongoose_1.Schema({
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    author: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "AllCode",
+        ref: "User",
         required: true,
     },
-    avatar: { type: String },
-    email: { type: String },
-    phone: { type: String, required: true },
-    role: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "AllCode",
-        required: true,
+    tags: [{ type: String }], // Hoặc liên kết với Collection Tag nếu cần
+    status: {
+        type: Boolean,
+        default: true,
     },
-    favorites: [{ type: mongoose_1.default.Schema.Types.ObjectId, ref: "Bicycle" }],
-}, { timestamps: true } //Thêm timestamps để tự động tạo createAt và updateAt
-);
+    favorites: [{ type: mongoose_1.default.Schema.Types.ObjectId, ref: "User" }], // Mảng chứa ID của User yêu thích
+    images: [{ type: String }],
+}, { timestamps: true });
 // Export model Product với interface IProduct
-const User = mongoose_1.default.model("User", UserSchema);
-exports.default = User;
+const Article = mongoose_1.default.model("Article", ArticleSchema);
+exports.default = Article;

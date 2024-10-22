@@ -17,14 +17,15 @@ const mongoose = require("mongoose");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const mongoURI = process.env.MONGO_URI || "";
-if (!mongoURI) {
+const mongoAliasURI = process.env.MONGO_ATLAS_URI || "";
+if (!mongoAliasURI) {
     console.error("MongoDB URI is not defined in the environment variables.");
     process.exit(1); // Thoát chương trình nếu không có URI
 }
 function connect() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield mongoose.connect(mongoURI, {
+            yield mongoose.connect(mongoAliasURI, {
                 useNewUrlParser: true,
                 //   useUnifiedTopology: true,
             });
