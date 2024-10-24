@@ -4,8 +4,9 @@ interface IBicycle extends Document {
   productionYear: number; // Năm sản xuất
   color: mongoose.Schema.Types.ObjectId; // Màu sắc
   frameType: string; // Loại khung (Nam/Nữ)
-  accessories: mongoose.Types.ObjectId; // Mảng ID của phụ kiện
+  accessories: [{ type: mongoose.Schema.Types.ObjectId; ref: "Accessories" }]; // Mảng ID của phụ kiện
   quantity: number; // Số lượng xe còn lại
+  priority: number;
   status: boolean; // Trạng thái hiển thị trên website (ẩn/hiện)
   thumbnail?: string; // Ảnh thu nhỏ (có thể không bắt buộc)
   listImage: string[]; // Danh sách link ảnh về xe
@@ -14,6 +15,8 @@ interface IBicycle extends Document {
     pre: number; // Giá hiện tại
     new?: number; // Giá mới (có thể không bắt buộc)
   };
+  views: number; // Lưu số lượt xem
+  viewers: [{ type: mongoose.Schema.Types.ObjectId; ref: "User" }]; // Lưu danh sách ID người xem
   description: string; // Thông tin về xe
   //
 }
@@ -22,14 +25,9 @@ const BicycleSchema: Schema = new Schema(
   {
     name: { type: String, require: true },
     productionYear: { type: Number, require: true },
-    color: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "AllCode",
-      required: true,
-    },
-    frameType: { type: String, require: true },
-    accessories: { type: mongoose.Schema.Types.ObjectId, ref: "Accessories" },
+    // frameType: { type: String, require: true },
     quantity: { type: Number, require: true },
+    priority: { type: Number, default: 0 },
     status: { type: Boolean, default: true },
     thumbnail: { type: String },
     listImage: [{ type: String }],
@@ -38,11 +36,19 @@ const BicycleSchema: Schema = new Schema(
       pre: { type: Number, require: true },
       new: { type: Number },
     },
+    views: { type: Number, default: 0 }, // Lưu số lượt xem
+    color: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "AllCode",
+      required: true,
+    },
+    accessories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Accessories" }],
+    category: { type: mongoose.Schema.Types.ObjectId, ref: "AllCode" }, // Tham chiếu tới AllCode
     description: { type: String, require: true },
   },
   { timestamps: true }
 );
-
+BicycleSchema.index({ name: 1 });
 // Export model Product với interface IProduct
 const Bicycle = mongoose.model<IBicycle>("Bicycle", BicycleSchema);
 export default Bicycle;
