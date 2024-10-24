@@ -15,8 +15,12 @@ interface IBicycle extends Document {
     pre: number; // Giá hiện tại
     new?: number; // Giá mới (có thể không bắt buộc)
   };
+<<<<<<< HEAD
   views: number; // Lưu số lượt xem
   viewers: [{ type: mongoose.Schema.Types.ObjectId; ref: "User" }]; // Lưu danh sách ID người xem
+=======
+  priority: number; // Độ ưu tiên hiển thị
+>>>>>>> 5fa51fd5bd6d3672b926973f06b089041b5b5eca
   description: string; // Thông tin về xe
   //
 }
@@ -36,6 +40,7 @@ const BicycleSchema: Schema = new Schema(
       pre: { type: Number, require: true },
       new: { type: Number },
     },
+<<<<<<< HEAD
     views: { type: Number, default: 0 }, // Lưu số lượt xem
     color: {
       type: mongoose.Schema.Types.ObjectId,
@@ -44,11 +49,18 @@ const BicycleSchema: Schema = new Schema(
     },
     accessories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Accessories" }],
     category: { type: mongoose.Schema.Types.ObjectId, ref: "AllCode" }, // Tham chiếu tới AllCode
+=======
+    priority: { type: Number, default: 0 }, // Độ ưu tiên, mặc định là 0
+>>>>>>> 5fa51fd5bd6d3672b926973f06b089041b5b5eca
     description: { type: String, require: true },
   },
   { timestamps: true }
 );
+<<<<<<< HEAD
 BicycleSchema.index({ name: 1 });
+=======
+BicycleSchema.index({name:1 });
+>>>>>>> 5fa51fd5bd6d3672b926973f06b089041b5b5eca
 // Export model Product với interface IProduct
 const Bicycle = mongoose.model<IBicycle>("Bicycle", BicycleSchema);
 export default Bicycle;

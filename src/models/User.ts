@@ -4,7 +4,7 @@ interface IUser extends Document {
   password: string;
   fullName: string;
   gender: mongoose.Types.ObjectId;
-  avatar: string;
+  avatar?: string;
   email: string;
   phone: string;
   role: mongoose.Types.ObjectId;
@@ -31,10 +31,12 @@ const UserSchema: Schema = new Schema(
       required: true,
     },
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Bicycle" }],
+    appointmentDate : { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },
   },
   { timestamps: true } //Thêm timestamps để tự động tạo createAt và updateAt
 );
-
+UserSchema.index({ username: 1, email:1}, { unique: true });
+UserSchema.index({fullName:1 });
 // Export model Product với interface IProduct
 const User = mongoose.model<IUser>("User", UserSchema);
 export default User;
