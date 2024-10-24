@@ -21,7 +21,7 @@ const AppointmentSchema: Schema = new Schema({
     require: true,
   },
 });
-
+AppointmentSchema.index({ userId: 1,appointmentDate:1});
 // Export model Product với interface IAppointment
 const Appointment = mongoose.model<IAppointment>(
   "Appointment",

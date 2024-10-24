@@ -14,6 +14,7 @@ interface IBicycle extends Document {
     pre: number; // Giá hiện tại
     new?: number; // Giá mới (có thể không bắt buộc)
   };
+  priority: number; // Độ ưu tiên hiển thị
   description: string; // Thông tin về xe
   //
 }
@@ -38,11 +39,12 @@ const BicycleSchema: Schema = new Schema(
       pre: { type: Number, require: true },
       new: { type: Number },
     },
+    priority: { type: Number, default: 0 }, // Độ ưu tiên, mặc định là 0
     description: { type: String, require: true },
   },
   { timestamps: true }
 );
-
+BicycleSchema.index({name:1 });
 // Export model Product với interface IProduct
 const Bicycle = mongoose.model<IBicycle>("Bicycle", BicycleSchema);
 export default Bicycle;
