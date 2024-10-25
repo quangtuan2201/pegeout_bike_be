@@ -24,30 +24,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-// Tạo schema cho Product
-const UserSchema = new mongoose_1.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    fullName: { type: String, required: true },
-    gender: {
+// Tạo schema cho ViewStatistics
+const ViewStatisticsSchema = new mongoose_1.Schema({
+    bicycle: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "AllCode",
+        ref: "Bicycle",
         required: true,
     },
-    avatar: { type: String },
-    email: { type: String },
-    phone: { type: String, required: true },
-    role: {
+    viewer: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "AllCode",
+        ref: "User",
         required: true,
     },
-    favorites: [{ type: mongoose_1.default.Schema.Types.ObjectId, ref: "Bicycle" }],
-    appointmentDate: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "Appointment" },
-}, { timestamps: true } //Thêm timestamps để tự động tạo createAt và updateAt
+    viewedAt: { type: Date, default: Date.now },
+}, { timestamps: true } // Thêm timestamps để tự động tạo createdAt và updatedAt
 );
-UserSchema.index({ username: 1, email: 1 }, { unique: true });
-UserSchema.index({ fullName: 1 });
-// Export model Product với interface IProduct
-const User = mongoose_1.default.model("User", UserSchema);
-exports.default = User;
+// Export model Product với interface IViewStatistics
+const ViewStatistics = mongoose_1.default.model("ViewStatistics", ViewStatisticsSchema);
+exports.default = ViewStatistics;

@@ -2,7 +2,10 @@
 import { registerRoutes } from "./routes/registerRoutes";
 import express from "express";
 import connect from "./config/connectDB";
-require("dotenv").config();
+import dotenv from "dotenv";
+
+dotenv.config();
+
 
 const app = express();
 const port = process.env.PORT || 2201;

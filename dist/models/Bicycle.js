@@ -28,13 +28,7 @@ const mongoose_1 = __importStar(require("mongoose"));
 const BicycleSchema = new mongoose_1.Schema({
     name: { type: String, require: true },
     productionYear: { type: Number, require: true },
-    color: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "AllCode",
-        required: true,
-    },
-    frameType: { type: String, require: true },
-    accessories: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "Accessories" },
+    // frameType: { type: String, require: true },
     quantity: { type: Number, require: true },
     status: { type: Boolean, default: true },
     thumbnail: { type: String },
@@ -44,8 +38,18 @@ const BicycleSchema = new mongoose_1.Schema({
         pre: { type: Number, require: true },
         new: { type: Number },
     },
+    views: { type: Number, default: 0 }, // Lưu số lượt xem
+    color: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "AllCode",
+        required: true,
+    },
+    accessories: [{ type: mongoose_1.default.Schema.Types.ObjectId, ref: "Accessories" }],
+    category: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "AllCode" }, // Tham chiếu tới AllCode
+    priority: { type: Number, default: 0 }, // Độ ưu tiên, mặc định là 0
     description: { type: String, require: true },
 }, { timestamps: true });
+BicycleSchema.index({ name: 1 });
 // Export model Product với interface IProduct
 const Bicycle = mongoose_1.default.model("Bicycle", BicycleSchema);
 exports.default = Bicycle;

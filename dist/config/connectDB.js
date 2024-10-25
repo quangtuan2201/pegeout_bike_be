@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = connect;
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const mongoURI = process.env.MONGO_URI || "";
 const mongoAliasURI = process.env.MONGO_ATLAS_URI || "";
 if (!mongoAliasURI) {
     console.error("MongoDB URI is not defined in the environment variables.");
@@ -25,10 +25,7 @@ if (!mongoAliasURI) {
 function connect() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield mongoose.connect(mongoAliasURI, {
-                useNewUrlParser: true,
-                //   useUnifiedTopology: true,
-            });
+            yield mongoose_1.default.connect(mongoAliasURI);
             console.log("Connected to MongoDB successfully!");
         }
         catch (error) {
