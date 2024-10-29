@@ -1,20 +1,16 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 import dotenv from "dotenv";
 dotenv.config();
-const mongoURI: string = process.env.MONGO_URI || "";
 const mongoAliasURI: string = process.env.MONGO_ATLAS_URI || "";
 
 if (!mongoAliasURI) {
   console.error("MongoDB URI is not defined in the environment variables.");
   process.exit(1); // Thoát chương trình nếu không có URI
 }
-
 export default async function connect(): Promise<void> {
   try {
-    await mongoose.connect(mongoAliasURI, {
-      useNewUrlParser: true,
-      //   useUnifiedTopology: true,
-    });
+    await mongoose.connect(mongoAliasURI);
     console.log("Connected to MongoDB successfully!");
   } catch (error) {
     console.log(

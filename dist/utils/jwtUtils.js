@@ -22,24 +22,29 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importStar(require("mongoose"));
-// Tạo schema cho Product
-const AppointmentSchema = new mongoose_1.Schema({
-    userId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "User", required: true },
-    bicycleId: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "Bicycle",
-        required: true,
-    },
-    appointmentDate: { type: Date, required: true }, // DateTime
-    status: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "AllCode",
-        require: true,
-    },
-});
-AppointmentSchema.index({ userId: 1, appointmentDate: 1 });
-// Export model Product với interface IAppointment
-const Appointment = mongoose_1.default.model("Appointment", AppointmentSchema);
-exports.default = Appointment;
+exports.verifyToken = exports.generateToken = void 0;
+const jwt = __importStar(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+if (!JWT_SECRET_KEY) {
+    throw new Error("JWT_SECRET_KEY is not defined in the environment variables.");
+}
+const generateToken = (userId, role, exp, username, email, phone) => {
+    return jwt.sign({ userId, role, exp, username, email, phone }, JWT_SECRET_KEY, { expiresIn: "720h" });
+};
+exports.generateToken = generateToken;
+const verifyToken = (token) => {
+    try {
+        return jwt.verify(token, JWT_SECRET_KEY);
+    }
+    catch (error) {
+        console.error(`ERROR ${error}`);
+        return null;
+    }
+};
+exports.verifyToken = verifyToken;

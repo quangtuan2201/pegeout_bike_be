@@ -1,1 +1,18 @@
  "dev": "concurrently \"tsc --watch\" \"nodemon --watch src --exec babel-node src/server.ts\""
+
+ export default async function connect(): Promise<void> {
+  try {
+    await mongoose.connect(mongoAliasURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true, // Tùy chọn này nên được giữ lại
+      //   useUnifiedTopology: true,
+    });
+    console.log("Connected to MongoDB successfully!");
+  } catch (error) {
+    console.log(
+      "Failed to connect to MongoDB:",
+      error instanceof Error ? error.message : error
+    );
+    process.exit(1);
+  }
+}

@@ -47,6 +47,7 @@ const BicycleSchema: Schema = new Schema(
   },
   { timestamps: true }
 );
+
 BicycleSchema.index({ name: 1 });
 // Export model Product với interface IProduct
 const Bicycle = mongoose.model<IBicycle>("Bicycle", BicycleSchema);
