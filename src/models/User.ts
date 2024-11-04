@@ -7,8 +7,7 @@ interface IUser extends Document {
   avatar?: string;
   email: string;
   phone: string;
-  role: mongoose.Types.ObjectId;
-  favorites: mongoose.Types.ObjectId[];
+  role: string[];
 }
 
 // Tạo schema cho Product
@@ -25,18 +24,16 @@ const UserSchema: Schema = new Schema(
     avatar: { type: String },
     email: { type: String },
     phone: { type: String, required: true },
-    role: {
+    role: [{ type: String, required: true }],
+    appointmentDate: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "AllCode",
-      required: true,
+      ref: "Appointment",
     },
-    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Bicycle" }],
-    appointmentDate : { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },
   },
   { timestamps: true } //Thêm timestamps để tự động tạo createAt và updateAt
 );
-UserSchema.index({ username: 1, email:1}, { unique: true });
-UserSchema.index({fullName:1 });
+UserSchema.index({ username: 1, email: 1 }, { unique: true });
+UserSchema.index({ fullName: 1 });
 // Export model Product với interface IProduct
 const User = mongoose.model<IUser>("User", UserSchema);
 export default User;

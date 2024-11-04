@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-interface IViewStatistics extends Document {
+interface IBicycleInteractions extends Document {
   bicycle: mongoose.Schema.Types.ObjectId; // Tham chiếu tới Bicycle
   viewer: mongoose.Schema.Types.ObjectId; // Tham chiếu tới User
   viewedAt: Date; // Thời gian người xem đã xem
@@ -7,7 +7,7 @@ interface IViewStatistics extends Document {
 }
 
 // Tạo schema cho ViewStatistics
-const ViewStatisticsSchema: Schema = new Schema(
+const BicycleInteractionsSchema: Schema = new Schema(
   {
     bicycle: {
       type: mongoose.Schema.Types.ObjectId,
@@ -24,8 +24,8 @@ const ViewStatisticsSchema: Schema = new Schema(
   { timestamps: true } // Thêm timestamps để tự động tạo createdAt và updatedAt
 );
 // Export model Product với interface IViewStatistics
-const ViewStatistics = mongoose.model<IViewStatistics>(
-  "ViewStatistics",
-  ViewStatisticsSchema
+const BicycleInteractions = mongoose.model<IBicycleInteractions>(
+  "BicycleInteractions",
+  BicycleInteractionsSchema
 );
-export default ViewStatistics;
+export default BicycleInteractions;

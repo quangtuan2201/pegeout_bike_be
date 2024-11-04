@@ -5,3 +5,5 @@ export { default as Accessories } from "./Accessories";
 export { default as AllCode } from "./AllCode";
 export { default as Appointment } from "./Appointment";
 export { default as Article } from "./Article";
+export { default as BicycleInteractions } from "./BicycleInteractions";
+export { default as FavoriteBicycles } from "./FavoriteBicycles";
