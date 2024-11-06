@@ -1,13 +1,15 @@
 import { Request, Response, Application, NextFunction } from "express";
 import { getAllProducts } from "../controllers";
 
-import { authenticate } from "../middlewares.ts/authMiddleware";
+import { authenticate, authorize } from "../middlewares.ts/index";
 import { Roles } from "../utils";
 
 interface Route {
   path: string;
   handler: (req: Request, res: Response) => void;
-  middleware?: Array<(req: Request, res: Response, next: NextFunction) => void> | null;
+  middleware?: Array<
+    (req: Request, res: Response, next: NextFunction) => void
+  > | null;
 }
 
 interface RouteMap {
@@ -29,7 +31,7 @@ const routes: RouteMap = {
     {
       path: "/home",
       handler: getAllProducts,
-      middleware: [authenticate([Roles.USER, Roles.ADMIN])], // Chỉ cho USER và ADMIN
+      middleware: [authenticate], // Chỉ cho USER và ADMIN
     },
   ],
   POST: [
@@ -45,7 +47,7 @@ const routes: RouteMap = {
       handler: (req: Request, res: Response) => {
         res.send("Tạo mới item");
       },
-      middleware: [authenticate([Roles.ADMIN])], // Chỉ dành cho ADMIN
+      middleware: [authenticate, authorize([Roles.ADMIN])], // Chỉ dành cho ADMIN
     },
   ],
   PUT: [
@@ -55,7 +57,7 @@ const routes: RouteMap = {
         const { id } = req.params;
         res.send(`Cập nhật item với id: ${id}`);
       },
-      middleware: [authenticate([Roles.ADMIN])],
+      middleware: [authenticate, authorize([Roles.ADMIN])],
     },
   ],
   DELETE: [
@@ -65,7 +67,7 @@ const routes: RouteMap = {
         const { id } = req.params;
         res.send(`Xóa item với id: ${id}`);
       },
-      middleware: [authenticate([Roles.ADMIN])],
+      middleware: [authenticate, authorize([Roles.ADMIN])],
     },
   ],
 };
