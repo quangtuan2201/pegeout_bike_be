@@ -1,9 +1,9 @@
 // src/utils/ResponseHandler.ts
 import { Response } from "express";
 import {
-  serverErrResponses,
-  successResponses,
-  clientErrResponses,
+  srvErrRes,
+  succRes,
+  cliErrRes,
 } from "./index";
 
 type ResponseData = {
@@ -18,7 +18,7 @@ class ResponseHandler {
   static success(
     res: Response,
     data: unknown = null,
-    message: string = successResponses.DEFAULT.message,
+    message: string = succRes.DEFAULT.message,
     options: {
       includeTotal?: boolean; // Tham số để quyết định có bao gồm total hay không
       total?: number; // Tổng số bản ghi, mặc định là 0
@@ -37,15 +37,15 @@ class ResponseHandler {
       response.total = total;
     }
 
-    return res.status(successResponses.DEFAULT.status).json(response);
+    return res.status(succRes.DEFAULT.status).json(response);
   }
 
   // Phản hồi lỗi chung
   static error(
     res: Response,
     statusCode: number = 500,
-    message: string = serverErrResponses.SERVER_ERROR.message,
-    data: unknown = null
+    message: string = srvErrRes.SERVER_ERROR.message,
+    data : unknown = null
   ) {
     return res.status(statusCode).json({
       success: false,
@@ -57,16 +57,16 @@ class ResponseHandler {
   // Các phản hồi lỗi nhanh
   static forbidden(
     res: Response,
-    message: string = clientErrResponses.FORBIDDEN.message
+    message: string = cliErrRes.FORBIDDEN.message
   ) {
-    return this.error(res, clientErrResponses.FORBIDDEN.status, message, null);
+    return this.error(res, cliErrRes.FORBIDDEN.status, message, null);
   }
 
   static notFound(
     res: Response,
-    message: string = clientErrResponses.NOT_FOUND.message
+    message: string = cliErrRes.NOT_FOUND.message
   ) {
-    return this.error(res, clientErrResponses.NOT_FOUND.status, message, null);
+    return this.error(res, cliErrRes.NOT_FOUND.status, message, null);
   }
 
   // Tạo phản hồi tùy chỉnh

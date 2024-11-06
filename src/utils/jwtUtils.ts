@@ -3,6 +3,7 @@ import { Roles } from "./constant";
 import dotenv from "dotenv";
 dotenv.config();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY as string;
+const TOKEN_EXPIRY = process.env.TOKEN_EXPIRY || '720h' as string
 
 if (!JWT_SECRET_KEY) {
   throw new Error(
@@ -10,14 +11,16 @@ if (!JWT_SECRET_KEY) {
   );
 }
 
+// Giao diện payload của JWT
 export interface JwtPayload {
   userId: string;
   role: Roles;
-  exp: number;
   username?: string;
   email?: string;
   phone?: string;
 }
+
+
 
 export const generateToken = (
   userId: string,
@@ -30,14 +33,26 @@ export const generateToken = (
   return jwt.sign(
     { userId, role, exp, username, email, phone },
     JWT_SECRET_KEY,
-    { expiresIn: "720h" }
+    { expiresIn: TOKEN_EXPIRY } // 720 giờ = 30 ngày
   );
 };
-export const verifyToken = (token: string): JwtPayload | null => {
+
+
+
+export const verifyToken = async (token: string): Promise<JwtPayload | null> => {
   try {
-    return jwt.verify(token, JWT_SECRET_KEY) as JwtPayload;
+    return new Promise((resolve, reject)=> {
+      jwt.verify(token, JWT_SECRET_KEY, (err, decode)=> {
+        if(err){
+          console.error()
+          reject(`Token verification failed:${err}`)
+        }else{
+          resolve(decode as JwtPayload);
+        }
+      })
+    }) 
   } catch (error) {
-    console.error(`ERROR ${error}`);
+    console.error(`Token verification failed: ${error}`);
     return null;
   }
 };

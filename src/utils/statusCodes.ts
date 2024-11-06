@@ -4,7 +4,7 @@ type StatusCode = {
   message: string;
 };
 // Định nghĩa mã trạng thái và thông điệp cho thành công
-export const successResponses: Record<string, StatusCode>= {
+export const succRes: Record<string, StatusCode>= {
     DEFAULT: { status: 200, message: "Thành công." },
     DATA_RETRIEVED: { status: 200, message: "Lấy dữ liệu thành công." },
     CREATED: { status: 201, message: "Tạo mới thành công." },
@@ -15,14 +15,15 @@ export const successResponses: Record<string, StatusCode>= {
   };
   
   // Định nghĩa mã trạng thái và thông điệp cho lỗi
-  export const clientErrResponses: Record<string, StatusCode>= {
+  export const cliErrRes: Record<string, StatusCode>= {
     DEFAULT: { status: 400, message: "Đã xảy ra lỗi." },
     NOT_FOUND: { status: 404, message: "Không tìm thấy tài nguyên." },
     UNAUTHORIZED: { status: 401, message: "Chưa được xác thực." },
     FORBIDDEN: { status: 403, message: "Truy cập bị từ chối." },
+    VERIFY : {status: 403, message: "Token không hợp lệ hoặc đã hết hạn" },
 
   };
-  export const serverErrResponses: Record<string, StatusCode> = {
+  export const srvErrRes: Record<string, StatusCode> = {
     SERVER_ERROR: { status: 500, message: "Lỗi máy chủ." },
     NOT_IMPLEMENTED : {status : 501, message : "Server chưa hỗ trợ chức năng được yêu cầu"},
     BAD_GATEWAY : {
@@ -40,7 +41,7 @@ export const successResponses: Record<string, StatusCode>= {
        
   }
   
-  export const infResponses: Record<string, StatusCode>= {
+  export const infRes: Record<string, StatusCode>= {
     CONTINUE : {
       status : 100,
       message : "Yêu cầu ban đầu đã được nhận"
@@ -51,7 +52,7 @@ export const successResponses: Record<string, StatusCode>= {
     }
   }
 
-export const redirectionResponse: Record<string, StatusCode>= {
+export const redirectionRes: Record<string, StatusCode>= {
     MOVED_PERMANENTLY : {
       status : 301 ,
       message : "Tài nguyên được yêu cầu đã được di chuyển vĩnh viễn."

@@ -8,6 +8,10 @@
     "esModuleInterop": true, // Cho phép nhập mặc định từ các module CommonJS
     "skipLibCheck": true // Bỏ qua việc kiểm tra type của các file khai báo
   },
-  "include": ["src/**/*"], // Bao gồm tất cả các file TypeScript trong thư mục src
+  "include": [
+    "src/**/*",// Bao gồm tất cả các file TypeScript trong thư mục src
+    "types/**/*.d.ts" // Bao gồm cả file express.d.ts vào quá trình biên dịch
+, "types"  ], 
+  
   "exclude": ["node_modules"] // Loại trừ node_modules khỏi quá trình biên dịch
 }

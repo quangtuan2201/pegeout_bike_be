@@ -7,7 +7,7 @@ import { Roles } from "../utils";
 interface Route {
   path: string;
   handler: (req: Request, res: Response) => void;
-  middleware?: Array<(req: Request, res: Response, next: NextFunction) => void>;
+  middleware?: Array<(req: Request, res: Response, next: NextFunction) => void> | null;
 }
 
 interface RouteMap {
@@ -24,7 +24,7 @@ const routes: RouteMap = {
       handler: (req: Request, res: Response) => {
         res.send("Chào mừng đến với dự án Xe đạp cổ Peugeout!");
       },
-      middleware: [authenticate([Roles.PUBLIC])], // Mở công khai
+      middleware: null, // Mở công khai
     },
     {
       path: "/home",
@@ -38,7 +38,7 @@ const routes: RouteMap = {
       handler: (req: Request, res: Response) => {
         res.send("Login");
       },
-      middleware: [authenticate([Roles.PUBLIC])], // Công khai
+      middleware: null, // Công khai
     },
     {
       path: "/create-item",

@@ -1,26 +1,33 @@
 import { Request, Response, NextFunction } from "express";
-import { Roles, verifyToken } from "../utils/index";
+import ResponseHandler,{ Roles, verifyToken, cliErrRes} from "../utils/index";
+
 
 export const authenticate = (allowedRoles: Roles[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    // Kiểm tra xem header có chứa token hay không
     const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split("")[1];
+    if(!authHeader) {
+      return ResponseHandler.error(res, cliErrRes.FORBIDDEN.status, cliErrRes.FORBIDDEN.message )
+    }
+
+      // Lấy token từ header
+    const token = authHeader && authHeader.split(" ")[1];
+
+      // Kiểm tra và giải mã token
     if (!token) {
-      return res.status(401).json({
-        message: "Authentication token required.",
-      });
+      return ResponseHandler.error(res,cliErrRes.UNAUTHORIZED.status,cliErrRes.UNAUTHORIZED.message);
     }
-    const decoded = verifyToken(token);
-    if (!decoded) {
-      return res.status(403).json({
-        message: "Invalid or expired token.",
-      });
+    const decoded = await verifyToken(token);
+    if (!decoded || !decoded.role) {
+      return ResponseHandler.error(res, cliErrRes.VERIFY.status, cliErrRes.VERIFY.message )
     }
+
+    // Kiểm tra vai trò người dùng
     if (!allowedRoles.includes(decoded.role)) {
-      return res.status(403).json({
-        message: "Access denied.",
-      });
+      return ResponseHandler.error(res, cliErrRes.FORBIDDEN.status,cliErrRes.FORBIDDEN.message )
     }
+
+     // Nếu tất cả điều kiện đều hợp lệ, cho phép tiếp tục
     next();
   };
 };
