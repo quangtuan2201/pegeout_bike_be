@@ -44,8 +44,8 @@ export const verifyToken = async (token: string): Promise<JwtPayload | null> => 
     return new Promise((resolve, reject)=> {
       jwt.verify(token, JWT_SECRET_KEY, (err, decode)=> {
         if(err){
-          console.error()
-          reject(`Token verification failed:${err}`)
+          console.error(err)
+          reject(null);
         }else{
           resolve(decode as JwtPayload);
         }

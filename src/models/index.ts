@@ -7,3 +7,4 @@ export { default as Appointment } from "./Appointment";
 export { default as Article } from "./Article";
 export { default as BicycleInteractions } from "./BicycleInteractions";
 export { default as FavoriteBicycles } from "./FavoriteBicycles";
+export { default as Route } from "./Route";

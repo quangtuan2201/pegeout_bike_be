@@ -1,7 +1,6 @@
 import { Request, Response, Application, NextFunction } from "express";
 import { getAllProducts } from "../controllers";
-
-import { authenticate, authorize } from "../middlewares.ts/index";
+import { authenticate, authorize, apiLogger } from "../middlewares.ts/index";
 import { Roles } from "../utils";
 
 interface Route {
@@ -82,11 +81,15 @@ export const registerRoutes = (app: Application) => {
           ...route.middleware,
           route.handler
         );
+        // Cập nhật hoặc thêm API vào DB
+        apiLogger({ method, path: route.path } as Request, {} as Response, () => {});
       } else {
         app[method.toLowerCase() as keyof Application](
           route.path,
           route.handler
         );
+        // Cập nhật hoặc thêm API vào DB
+        apiLogger({ method , path: route.path } as Request, {} as Response, () => {});
       }
     });
   });

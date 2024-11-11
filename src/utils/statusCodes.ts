@@ -66,17 +66,3 @@ export const redirectionRes: Record<string, StatusCode>= {
       message : "Tài nguyên không thay đổi kể từ lần yêu cầu cuối"
     }
 }
-
-// // Hàm để lấy phản hồi lỗi từ client hoặc server
-// export function getErrorResponse(errorCode: string): StatusCode {
-//   // Kiểm tra mã lỗi trong clientErrResponses
-//   if (clientErrResponses[errorCode]) {
-//     return clientErrResponses[errorCode];
-//   }
-//   // Kiểm tra mã lỗi trong serverErrResponses
-//   if (serverErrResponses[errorCode]) {
-//     return serverErrResponses[errorCode];
-//   }
-//   // Mặc định trả về lỗi chung nếu không tìm thấy mã lỗi
-//   return clientErrResponses.DEFAULT;
-// }
